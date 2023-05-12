@@ -19,7 +19,7 @@ steps:
 
 - task: AzureCLI@2
   inputs:
-    azureSubscription: 'Visual Studio Enterprise Subscription'
+    azureSubscription: 'Visual Studio Enterprise Subscription(8377ac7f-7423-4f7a-909b-0eed6a86ec22)'
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
