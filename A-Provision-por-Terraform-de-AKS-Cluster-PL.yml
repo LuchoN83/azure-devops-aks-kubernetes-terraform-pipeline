@@ -111,8 +111,6 @@ stages:
 ## Step-4: Terraform Plan (Creacion del Plan)
 ## Step-5: Terraform Apply (Uso del plan en el paso anterior)
 
-- stage: DeployAKSClusters
-  jobs:
     - deployment: DeployQAAKSCluster
       dependsOn: DeployDevAKSCluster
       displayName: DeployQAAKSCluster
