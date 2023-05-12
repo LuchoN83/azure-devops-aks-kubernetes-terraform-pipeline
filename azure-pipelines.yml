@@ -27,3 +27,17 @@ steps:
       chmod 700 get_helm.sh
       ./get_helm.sh
       helm version
+
+steps:
+- task: HelmInstaller@1
+  inputs:
+    helmVersionToInstall: 'latest'
+- task: HelmDeploy@0
+  inputs:
+    connectionType: 'Kubernetes Service Connection'
+    kubernetesServiceConnection: '<your_kubernetes_service_connection>'
+    command: 'upgrade'
+    chartType: 'FilePath'
+    chartPath: '<path_to_your_helm_chart>'
+    releaseName: '<release_name>'
+    overrideValues: '<path_to_values_file>'
