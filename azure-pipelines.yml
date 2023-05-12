@@ -1,24 +1,29 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-- master
+  branches:
+    include:
+      - main
+
+pr:
+  branches:
+    include:
+      - '*'
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'ubuntu-latest'
 
 steps:
-- task: HelmInstaller@1
+- task: UsePythonVersion@0
   inputs:
-    helmVersionToInstall: 'latest'
-- task: HelmDeploy@0
+    versionSpec: '3.x'
+    addToPath: true
+
+- task: AzureCLI@2
   inputs:
-    connectionType: 'Kubernetes Service Connection'
-    kubernetesServiceConnection: '<your_kubernetes_service_connection>'
-    command: 'upgrade'
-    chartType: 'FilePath'
-    chartPath: '<path_to_your_helm_chart>'
-    releaseName: '<release_name>'
-    overrideValues: '<path_to_values_file>'
+    azureSubscription: 'Visual Studio Enterprise Subscription'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 > get_helm.sh
+      chmod 700 get_helm.sh
+      ./get_helm.sh
+      helm version
